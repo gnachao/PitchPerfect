@@ -26,10 +26,30 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recording" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQC-xa-Q7y">
+                                <rect key="frame" x="260" y="368" width="79" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AjT-nh-1Fe">
+                                <rect key="frame" x="270" y="510" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="lPX-HU-74V"/>
+                                    <constraint firstAttribute="height" constant="60" id="p4X-Jd-2bl"/>
+                                </constraints>
+                                <state key="normal" image="Stop">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="AjT-nh-1Fe" secondAttribute="centerX" id="52P-JX-KfT"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="AjT-nh-1Fe" secondAttribute="bottom" constant="30" id="P1K-Y8-ref"/>
                             <constraint firstAttribute="centerX" secondItem="oxq-zc-dch" secondAttribute="centerX" id="Zll-HH-0Oo"/>
+                            <constraint firstAttribute="centerX" secondItem="qQC-xa-Q7y" secondAttribute="centerX" id="eVL-1Y-zm4"/>
+                            <constraint firstItem="qQC-xa-Q7y" firstAttribute="top" secondItem="oxq-zc-dch" secondAttribute="bottom" constant="8" id="ux2-fE-LJA"/>
                             <constraint firstAttribute="centerY" secondItem="oxq-zc-dch" secondAttribute="centerY" id="wQQ-hC-rAN"/>
                         </constraints>
                     </view>
@@ -40,5 +60,6 @@
     </scenes>
     <resources>
         <image name="Microphone" width="200" height="200"/>
+        <image name="Stop" width="100" height="100"/>
     </resources>
 </document>
