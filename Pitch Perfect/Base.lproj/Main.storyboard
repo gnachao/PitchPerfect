@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Record-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Pitch_Perfect" customModuleProvider="target" sceneMemberID="viewController">
@@ -46,6 +46,7 @@
                                 </state>
                                 <connections>
                                     <action selector="stopAudio:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ViR-xV-MbD"/>
+                                    <segue destination="7xp-yp-QdS" kind="show" id="Mir-sA-Jub"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -59,7 +60,7 @@
                             <constraint firstAttribute="centerY" secondItem="oxq-zc-dch" secondAttribute="centerY" id="wQQ-hC-rAN"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="zd6-Jv-efh"/>
+                    <navigationItem key="navigationItem" title="Record" id="zd6-Jv-efh"/>
                     <connections>
                         <outlet property="RecordingInProgress" destination="qQC-xa-Q7y" id="fGB-4G-DMs"/>
                         <outlet property="stopButton" destination="AjT-nh-1Fe" id="cwF-dH-WEG"/>
@@ -67,7 +68,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="803" y="343"/>
+            <point key="canvasLocation" x="305" y="-335"/>
+        </scene>
+        <!--Play Sounds View Controller-->
+        <scene sceneID="JXT-RQ-Mlm">
+            <objects>
+                <viewController id="7xp-yp-QdS" customClass="PlaySoundsViewController" customModule="Pitch_Perfect" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Hhy-f9-Vfk"/>
+                        <viewControllerLayoutGuide type="bottom" id="cWt-sd-2Qq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2za-3h-edt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="abD-wh-zXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="977" y="-335"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bhE-ql-JIQ">
@@ -85,7 +104,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u3H-zY-V4H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="57" y="343"/>
+            <point key="canvasLocation" x="-371" y="-335"/>
         </scene>
     </scenes>
     <resources>
