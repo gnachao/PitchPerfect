@@ -65,6 +65,7 @@
                     <navigationItem key="navigationItem" title="Record" id="zd6-Jv-efh"/>
                     <connections>
                         <outlet property="RecordingInProgress" destination="qQC-xa-Q7y" id="fGB-4G-DMs"/>
+                        <outlet property="recordButton" destination="oxq-zc-dch" id="gbr-u4-QOz"/>
                         <outlet property="stopButton" destination="AjT-nh-1Fe" id="cwF-dH-WEG"/>
                     </connections>
                 </viewController>
