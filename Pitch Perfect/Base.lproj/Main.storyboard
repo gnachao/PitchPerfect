@@ -58,6 +58,7 @@
                     </view>
                     <connections>
                         <outlet property="RecordingInProgress" destination="qQC-xa-Q7y" id="fGB-4G-DMs"/>
+                        <outlet property="stopButton" destination="AjT-nh-1Fe" id="cwF-dH-WEG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
