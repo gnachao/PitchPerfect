@@ -49,6 +49,6 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer.stop()
     }
     
-
+    //TODO: playSlowAudio and playFastAudio use one function to call them
 
 }
