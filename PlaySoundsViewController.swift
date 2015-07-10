@@ -27,6 +27,8 @@ class PlaySoundsViewController: UIViewController {
 //            println("the filepath is empty")
 //        }
         
+        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
+        
         audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
         audioPlayer.enableRate = true
         
