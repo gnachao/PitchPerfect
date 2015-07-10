@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class RecordSoundsViewController: UIViewController {
+class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
 
     @IBOutlet weak var RecordingInProgress: UILabel!
     @IBOutlet weak var stopButton: UIButton!
@@ -53,11 +53,17 @@ class RecordSoundsViewController: UIViewController {
         
         // Initialize and prepare the recorder
         audioRecorder = AVAudioRecorder(URL: filePath, settings: nil, error: nil)
+        audioRecorder.delegate = self
         audioRecorder.meteringEnabled = true;
         audioRecorder.prepareToRecord()
         audioRecorder.record()
     }
 
+    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
+        //TODO: Step 1 - Save the recorded audio
+        
+        //TODO: Step 2 - Move to the next scene aka peform segue
+    }
     @IBAction func stopAudio(sender: UIButton) {
         RecordingInProgress.hidden = true
         audioRecorder.stop()
