@@ -14,6 +14,9 @@ class PlaySoundsViewController: UIViewController {
     var audioPlayer: AVAudioPlayer!
     var receivedAudio: RecordedAudio!
     
+    var audioEngine: AVAudioEngine!
+    var audioFile: AVAudioFile!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        if var filePath = NSBundle.mainBundle().pathForResource("18 天长地久", ofType: "mp3"){
@@ -27,7 +30,8 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
         audioPlayer.enableRate = true
         
-        // Do any additional setup after loading the view.
+        audioEngine = AVAudioEngine()
+        audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl, error: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,6 +52,31 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer.rate = 1.5
         audioPlayer.currentTime = 0.0 //play from the start
         audioPlayer.play()
+    }
+    
+    func playAudioWithVariablePitch(pitch: Float) {
+        audioPlayer.stop()
+        audioEngine.stop()
+        audioEngine.reset()
+        
+        var audioPlayNode = AVAudioPlayerNode()
+        audioEngine.attachNode(audioPlayNode)
+        
+        var changePitchEffect = AVAudioUnitTimePitch()
+        changePitchEffect.pitch = pitch
+        audioEngine.attachNode(changePitchEffect)
+        
+        audioEngine.connect(audioPlayNode, to: changePitchEffect, format: nil)
+        audioEngine.connect(changePitchEffect, to: audioEngine.outputNode, format: nil)
+        
+        audioPlayNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        audioEngine.startAndReturnError(nil)
+        
+        audioPlayNode.play()
+    }
+    
+    @IBAction func playChipmunkAudio(sender: UIButton) {
+        playAudioWithVariablePitch(1000)
     }
     
     @IBAction func stopAudio(sender: UIButton) {
