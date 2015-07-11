@@ -5,6 +5,9 @@
 //  Created by MacBKPro on 7/9/15.
 //  Copyright (c) 2015 Gna Chao. All rights reserved.
 //
+// Ref: http://sandmemory.blogspot.com/2014/12/how-would-you-add-reverbecho-to-audio.html
+//      https://developer.apple.com/library/prerelease/ios/documentation/AVFoundation/Reference/AVAudioUnitReverb_Class/index.html#//apple_ref/occ/instp/AVAudioUnitReverb/wetDryMix
+
 
 import UIKit
 import AVFoundation
@@ -12,10 +15,13 @@ import AVFoundation
 class PlaySoundsViewController: UIViewController {
     
     var audioPlayer: AVAudioPlayer!
+    var audioEchoPlayer: AVAudioPlayer!
     var receivedAudio: RecordedAudio!
     
     var audioEngine: AVAudioEngine!
     var audioFile: AVAudioFile!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +36,7 @@ class PlaySoundsViewController: UIViewController {
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         
         audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
+        audioEchoPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
         audioPlayer.enableRate = true
         
         audioEngine = AVAudioEngine()
@@ -41,17 +48,22 @@ class PlaySoundsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func playAudioWithVariableRate(rate: Float){
+    func stopNowPlaying(){
         audioPlayer.stop()
+        audioEngine.stop()
+        audioEngine.reset()
+    }
+    
+    func playAudioWithVariableRate(rate: Float){
+        stopNowPlaying()
+        
         audioPlayer.rate = rate
         audioPlayer.currentTime = 0.0 //play from the start
         audioPlayer.play()
     }
     
     func playAudioWithVariablePitch(pitch: Float) {
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        stopNowPlaying()
         
         var audioPlayNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayNode)
@@ -69,6 +81,26 @@ class PlaySoundsViewController: UIViewController {
         audioPlayNode.play()
     }
     
+    func playAudioWithVariableReverb(wetDry: Float) {
+        stopNowPlaying()
+        
+        var audioPlayNode = AVAudioPlayerNode()
+        audioEngine.attachNode(audioPlayNode)
+
+        
+        let unitReverb = AVAudioUnitReverb()
+        unitReverb.wetDryMix = wetDry
+        audioEngine.attachNode(unitReverb)
+        
+        audioEngine.connect(audioPlayNode, to: unitReverb, format: nil)
+        audioEngine.connect(unitReverb, to: audioEngine.outputNode, format: nil)
+        
+        audioPlayNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        audioEngine.startAndReturnError(nil)
+        
+        audioPlayNode.play()
+    }
+    
     @IBAction func playSlowAudio(sender: AnyObject) {
         playAudioWithVariableRate(0.5)
     }
@@ -79,9 +111,23 @@ class PlaySoundsViewController: UIViewController {
     
     @IBAction func playEchoAudio(sender: UIButton) {
         playAudioWithVariableRate(1.0)
+        
+        let delay:NSTimeInterval = 0.1//100ms
+        var playtime:NSTimeInterval
+        
+        playtime = audioEchoPlayer.deviceCurrentTime + delay
+        audioEchoPlayer.stop()
+        audioEchoPlayer.currentTime = 0
+        audioEchoPlayer.volume = 0.8;
+        audioEchoPlayer.playAtTime(playtime)
     }
     
+    
+    @IBAction func playReverbAudio(sender: UIButton) {
+        playAudioWithVariableReverb(50)
+    }
 
+    
     @IBAction func playChipmunkAudio(sender: UIButton) {
         playAudioWithVariablePitch(1000)
     }
@@ -91,7 +137,7 @@ class PlaySoundsViewController: UIViewController {
     }
     
     @IBAction func stopAudio(sender: UIButton) {
-        audioPlayer.stop()
+        stopNowPlaying()
     }
     
     //TODO: playSlowAudio and playFastAudio use one function to call them
