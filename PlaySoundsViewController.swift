@@ -5,9 +5,6 @@
 //  Created by MacBKPro on 7/9/15.
 //  Copyright (c) 2015 Gna Chao. All rights reserved.
 //
-// Ref: http://sandmemory.blogspot.com/2014/12/how-would-you-add-reverbecho-to-audio.html
-//      https://developer.apple.com/library/prerelease/ios/documentation/AVFoundation/Reference/AVAudioUnitReverb_Class/index.html#//apple_ref/occ/instp/AVAudioUnitReverb/wetDryMix
-
 
 import UIKit
 import AVFoundation
@@ -20,33 +17,32 @@ class PlaySoundsViewController: UIViewController {
     
     var audioEngine: AVAudioEngine!
     var audioFile: AVAudioFile!
-    
-    
+
+    var filePathUrl: NSURL!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if var filePath = NSBundle.mainBundle().pathForResource("18 天长地久", ofType: "mp3"){
-//            var filePathUrl = NSURL.fileURLWithPath(filePath)
-//            audioPlayer = AVAudioPlayer(contentsOfURL: filePathUrl, error: nil)
-//            audioPlayer.enableRate = true
-//        }else{
-//            println("the filepath is empty")
-//        }
+        
+        if var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
+            filePathUrl = NSURL.fileURLWithPath(filePath)
+        }else{
+            filePathUrl = receivedAudio.filePathUrl
+            println("the filepath is empty")
+        }
+        
+//        filePathUrl = receivedAudio.filePathUrl
         
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         
-        audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
-        audioEchoPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
+        audioPlayer = AVAudioPlayer(contentsOfURL: filePathUrl, error: nil)
+        audioEchoPlayer = AVAudioPlayer(contentsOfURL: filePathUrl, error: nil)
         audioPlayer.enableRate = true
         
         audioEngine = AVAudioEngine()
-        audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl, error: nil)
+        audioFile = AVAudioFile(forReading: filePathUrl, error: nil)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
     
     func stopNowPlaying(){
         audioPlayer.stop()
@@ -89,6 +85,7 @@ class PlaySoundsViewController: UIViewController {
 
         
         let unitReverb = AVAudioUnitReverb()
+        unitReverb.loadFactoryPreset(AVAudioUnitReverbPreset.LargeHall)
         unitReverb.wetDryMix = wetDry
         audioEngine.attachNode(unitReverb)
         
@@ -100,6 +97,7 @@ class PlaySoundsViewController: UIViewController {
         
         audioPlayNode.play()
     }
+    
     
     @IBAction func playSlowAudio(sender: AnyObject) {
         playAudioWithVariableRate(0.5)
@@ -124,7 +122,7 @@ class PlaySoundsViewController: UIViewController {
     
     
     @IBAction func playReverbAudio(sender: UIButton) {
-        playAudioWithVariableReverb(50)
+        playAudioWithVariableReverb(60)
     }
 
     
@@ -140,6 +138,9 @@ class PlaySoundsViewController: UIViewController {
         stopNowPlaying()
     }
     
-    //TODO: playSlowAudio and playFastAudio use one function to call them
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 
 }
