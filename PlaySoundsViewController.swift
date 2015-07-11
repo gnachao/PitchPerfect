@@ -25,16 +25,18 @@ class PlaySoundsViewController: UIViewController {
         super.viewDidLoad()
 
         filePathUrl = receivedAudio.filePathUrl
-
+        passAudioFileToPlayer(filePathUrl)
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
-        
+    }
+
+    func passAudioFileToPlayer(filePathUrl: NSURL!){
         audioPlayer = AVAudioPlayer(contentsOfURL: filePathUrl, error: nil)
         audioPlayer.enableRate = true
         
         audioEngine = AVAudioEngine()
         audioFile = AVAudioFile(forReading: filePathUrl, error: nil)
     }
-
+    
     func stopPlaying(){
         audioPlayer.stop()
         audioEngine.stop()
@@ -126,17 +128,16 @@ class PlaySoundsViewController: UIViewController {
     }
 
     @IBAction func switchAudio(sender: UISwitch) {
-        var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav")
-        filePathUrl = NSURL.fileURLWithPath(filePath!)
-//        if sender.on{
-//            if var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
-//                filePathUrl = NSURL.fileURLWithPath(filePath)
-//            }else{
-//                filePathUrl = receivedAudio.filePathUrl
-//                println("the filepath is empty")
-//            }
-//        }else{
-//            filePathUrl = receivedAudio.filePathUrl
-//        }
+        if sender.on{
+            if var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
+                filePathUrl = NSURL.fileURLWithPath(filePath)
+            }else{
+                filePathUrl = receivedAudio.filePathUrl
+                println("the filepath is empty")
+            }
+        }else{
+            filePathUrl = receivedAudio.filePathUrl
+        }
+        passAudioFileToPlayer(filePathUrl)
     }
 }
