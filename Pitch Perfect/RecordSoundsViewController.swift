@@ -27,6 +27,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         RecordingInProgress.text = "Tap to Record"
     }
     
+    // Record audio: init click record, pause, resume
     @IBAction func recordAudio(sender: UIButton) {
         switch recordButton.currentTitle! {
             case "Recording":

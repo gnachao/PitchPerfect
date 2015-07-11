@@ -25,6 +25,7 @@ class PlaySoundsViewController: UIViewController {
         super.viewDidLoad()
 
         filePathUrl = receivedAudio.filePathUrl
+        // pass audio file path to audioPlayer and audioEngine
         passAudioFileToPlayer(filePathUrl)
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
     }
@@ -54,13 +55,13 @@ class PlaySoundsViewController: UIViewController {
     func playAudioWithEffect(effect: String, value: Float) {
         stopPlaying()
         
-        var audioPlayerNode = AVAudioPlayerNode()
+        let audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
         
         switch effect{
             case "pitch":
                 if (value >= -2400 && value <= 2400) {
-                    var pitchNode = AVAudioUnitTimePitch()
+                    let pitchNode = AVAudioUnitTimePitch()
                     pitchNode.pitch = value
                     audioEngine.attachNode(pitchNode)
                     
@@ -70,7 +71,7 @@ class PlaySoundsViewController: UIViewController {
                     audioEngine.connect(pitchNode, to: audioEngine.outputNode, format: nil)
                 }
             case "echo":
-                var echoNode = AVAudioUnitDelay()
+                let echoNode = AVAudioUnitDelay()
                 echoNode.delayTime = NSTimeInterval(value)
                 audioEngine.attachNode(echoNode)
             
@@ -78,7 +79,7 @@ class PlaySoundsViewController: UIViewController {
                 audioEngine.connect(echoNode, to: audioEngine.outputNode, format: nil)
             case "reverb":
                 if (value >= 0 && value <= 100) {
-                    var reverbNode = AVAudioUnitReverb()
+                    let reverbNode = AVAudioUnitReverb()
                     reverbNode.loadFactoryPreset(AVAudioUnitReverbPreset.LargeHall)
                     reverbNode.wetDryMix = value
                     audioEngine.attachNode(reverbNode)
@@ -129,7 +130,7 @@ class PlaySoundsViewController: UIViewController {
 
     @IBAction func switchAudio(sender: UISwitch) {
         if sender.on{
-            if var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
+            if let filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
                 filePathUrl = NSURL.fileURLWithPath(filePath)
             }else{
                 filePathUrl = receivedAudio.filePathUrl
