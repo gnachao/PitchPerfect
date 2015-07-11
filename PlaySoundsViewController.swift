@@ -22,14 +22,14 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
-            filePathUrl = NSURL.fileURLWithPath(filePath)
-        }else{
-            filePathUrl = receivedAudio.filePathUrl
-            println("the filepath is empty")
-        }
+//        if var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
+//            filePathUrl = NSURL.fileURLWithPath(filePath)
+//        }else{
+//            filePathUrl = receivedAudio.filePathUrl
+//            println("the filepath is empty")
+//        }
         
-//        filePathUrl = receivedAudio.filePathUrl
+        filePathUrl = receivedAudio.filePathUrl
         
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         
