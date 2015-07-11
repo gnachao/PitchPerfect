@@ -19,16 +19,15 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     var recordedAudio: RecordedAudio!
     
     override func viewWillAppear(animated: Bool) {
-        // Not recording indicators
-        stopButton.hidden = true
-        recordButton.enabled = true
-        recordButton.setTitle("Recording", forState: UIControlState.Normal)
         let image = UIImage(named: "Microphone.png") as UIImage!
+        recordButton.setTitle("Recording", forState: .Normal)
         recordButton.setImage(image, forState: .Normal)
+        
+        stopButton.hidden = true
+        RecordingInProgress.text = "Tap to Record"
     }
     
     @IBAction func recordAudio(sender: UIButton) {
-        // Recording inicators
         switch recordButton.currentTitle! {
             case "Recording":
                 setRecordingStage(recordButton.currentTitle!)
@@ -48,30 +47,27 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
                 audioRecorder.meteringEnabled = true;
                 audioRecorder.prepareToRecord()
                 audioRecorder.record()
-
-                println("You pressed Recording")
             case "Pausing":
                 setRecordingStage(recordButton.currentTitle!)
                 audioRecorder.pause()
-                println("You pressed Pausing")
             case "Resuming":
                 setRecordingStage(recordButton.currentTitle!)
                 audioRecorder.record()
-                println("You pressed Resuming")
         default:
             println("The recording button title is not in the implementation!")
             break
         }
     }
 
+    // perform asap recording is finished
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
         if(flag){
-            // Step 1 - Save the recorded audio
+            // Save the recorded audio
             recordedAudio = RecordedAudio()
             recordedAudio.filePathUrl = recorder.url
             recordedAudio.title = recorder.url.lastPathComponent
             
-            // Step 2 - Move to the next scene aka peform segue
+            // Move to the next scene aka peform segue
             self.performSegueWithIdentifier("stopRecording", sender: recordedAudio)
         }else{
             println("Recording was not successful")
@@ -93,36 +89,38 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     func setRecordingStage(stage: String){
         switch stage {
             case "Recording":
+                let image = UIImage(named: "Pause.png") as UIImage!
                 recordButton.setTitle("Pausing", forState: UIControlState.Normal)
+                recordButton.setImage(image, forState: .Normal)
+                
                 stopButton.hidden = false
-                RecordingInProgress.hidden = false
-                let image = UIImage(named: "Pause.png") as UIImage!
-                recordButton.setImage(image, forState: .Normal)
+                RecordingInProgress.text = "Recording ..."
             case "Pausing":
-                recordButton.setTitle("Resuming", forState: UIControlState.Normal)
                 let image = UIImage(named: "Resume.png") as UIImage!
+                recordButton.setTitle("Resuming", forState: .Normal)
                 recordButton.setImage(image, forState: .Normal)
-                RecordingInProgress.hidden = true
+                
+                RecordingInProgress.text = "Tap to Resume Recording"
             case "Resuming":
-                recordButton.setTitle("Pausing", forState: UIControlState.Normal)
                 let image = UIImage(named: "Pause.png") as UIImage!
+                recordButton.setTitle("Pausing", forState: .Normal)
                 recordButton.setImage(image, forState: .Normal)
-                RecordingInProgress.hidden = false
+                
+                RecordingInProgress.text = "Recording ..."
         default:
-            recordButton.setTitle("Recording", forState: UIControlState.Normal)
-            stopButton.hidden = true
-            RecordingInProgress.hidden = true
             let image = UIImage(named: "Microphone.png") as UIImage!
+            recordButton.setTitle("Recording", forState: .Normal)
             recordButton.setImage(image, forState: .Normal)
+            
+            stopButton.hidden = true
+            RecordingInProgress.text = "Tap to Record"
         }
     }
     
     @IBAction func stopAudio(sender: UIButton) {
-        RecordingInProgress.hidden = true
         audioRecorder.stop()
         var audioSession = AVAudioSession.sharedInstance();
         audioSession.setActive(false, error: nil)
-        //TODO: Stop recording the user's voice
     }
     
 }

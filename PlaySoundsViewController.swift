@@ -11,6 +11,8 @@ import AVFoundation
 
 class PlaySoundsViewController: UIViewController {
     
+    @IBOutlet weak var audioSwitch: UISwitch!
+    
     var audioPlayer: AVAudioPlayer!
     var receivedAudio: RecordedAudio!
     
@@ -21,16 +23,9 @@ class PlaySoundsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        if var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
-//            filePathUrl = NSURL.fileURLWithPath(filePath)
-//        }else{
-//            filePathUrl = receivedAudio.filePathUrl
-//            println("the filepath is empty")
-//        }
-        
+
         filePathUrl = receivedAudio.filePathUrl
-        
+
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         
         audioPlayer = AVAudioPlayer(contentsOfURL: filePathUrl, error: nil)
@@ -40,7 +35,6 @@ class PlaySoundsViewController: UIViewController {
         audioFile = AVAudioFile(forReading: filePathUrl, error: nil)
     }
 
-    
     func stopPlaying(){
         audioPlayer.stop()
         audioEngine.stop()
@@ -91,7 +85,7 @@ class PlaySoundsViewController: UIViewController {
                     audioEngine.connect(reverbNode, to: audioEngine.outputNode, format: nil)
                 }
         default:
-            println("effect is not in the list")
+            println("effect is not in implemented!")
         }
 
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
@@ -131,4 +125,18 @@ class PlaySoundsViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
+    @IBAction func switchAudio(sender: UISwitch) {
+        var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav")
+        filePathUrl = NSURL.fileURLWithPath(filePath!)
+//        if sender.on{
+//            if var filePath = NSBundle.mainBundle().pathForResource("sample", ofType: "wav"){
+//                filePathUrl = NSURL.fileURLWithPath(filePath)
+//            }else{
+//                filePathUrl = receivedAudio.filePathUrl
+//                println("the filepath is empty")
+//            }
+//        }else{
+//            filePathUrl = receivedAudio.filePathUrl
+//        }
+    }
 }

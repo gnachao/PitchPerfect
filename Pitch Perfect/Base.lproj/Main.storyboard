@@ -31,7 +31,7 @@
                                     <action selector="recordAudio:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="9nj-tn-fBS"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recording" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQC-xa-Q7y">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recording" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQC-xa-Q7y">
                                 <rect key="frame" x="264.5" y="368" width="71" height="14"/>
                                 <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
                                 <color key="textColor" red="0.12549019607843137" green="0.29019607843137252" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
@@ -152,11 +152,25 @@
                                     <action selector="playReverbAudio:" destination="7xp-yp-QdS" eventType="touchUpInside" id="qms-HV-YTQ"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cc0-io-gZ5">
+                                <rect key="frame" x="16" y="539" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchAudio:" destination="7xp-yp-QdS" eventType="valueChanged" id="3Mk-qC-Pzo"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Audio Clip" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3X-eG-WF5">
+                                <rect key="frame" x="16" y="575" width="120" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="cWt-sd-2Qq" firstAttribute="top" secondItem="p3X-eG-WF5" secondAttribute="bottom" constant="8" id="0lg-eh-5HA"/>
                             <constraint firstItem="799-9m-9wW" firstAttribute="width" secondItem="Whf-Ds-Npf" secondAttribute="width" id="0m9-Pv-T7S"/>
                             <constraint firstItem="HEu-vN-Neq" firstAttribute="leading" secondItem="Whf-Ds-Npf" secondAttribute="trailing" constant="308" id="5BR-Oa-6d9"/>
+                            <constraint firstItem="p3X-eG-WF5" firstAttribute="leading" secondItem="2za-3h-edt" secondAttribute="leadingMargin" id="7Bx-7J-SmS"/>
                             <constraint firstItem="799-9m-9wW" firstAttribute="height" secondItem="HEu-vN-Neq" secondAttribute="height" id="7wL-fL-7OT"/>
                             <constraint firstItem="799-9m-9wW" firstAttribute="top" secondItem="HEu-vN-Neq" secondAttribute="bottom" constant="23" id="A7D-ru-9IU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="799-9m-9wW" secondAttribute="trailing" constant="30" id="BYO-K1-csh"/>
@@ -170,6 +184,8 @@
                             <constraint firstItem="799-9m-9wW" firstAttribute="width" secondItem="Y58-nv-QYb" secondAttribute="width" id="JGD-ih-cjL"/>
                             <constraint firstItem="HEu-vN-Neq" firstAttribute="top" secondItem="Hhy-f9-Vfk" secondAttribute="bottom" constant="40" id="JUC-N0-7SB"/>
                             <constraint firstItem="vYQ-tw-jln" firstAttribute="leading" secondItem="Y58-nv-QYb" secondAttribute="trailing" constant="308" id="MHs-cN-4go"/>
+                            <constraint firstItem="cWt-sd-2Qq" firstAttribute="top" secondItem="cc0-io-gZ5" secondAttribute="bottom" constant="30" id="QqH-P1-1gx"/>
+                            <constraint firstItem="cc0-io-gZ5" firstAttribute="leading" secondItem="2za-3h-edt" secondAttribute="leadingMargin" id="S2Q-9D-2Js"/>
                             <constraint firstAttribute="centerX" secondItem="zLH-6C-R3M" secondAttribute="centerX" id="UcN-yv-Jql"/>
                             <constraint firstItem="Y58-nv-QYb" firstAttribute="leading" secondItem="2za-3h-edt" secondAttribute="leadingMargin" constant="30" id="ZfI-wi-XdR"/>
                             <constraint firstItem="799-9m-9wW" firstAttribute="width" secondItem="HEu-vN-Neq" secondAttribute="width" id="Zul-Za-BT9"/>
@@ -191,6 +207,9 @@
                             <constraint firstItem="799-9m-9wW" firstAttribute="height" secondItem="Y58-nv-QYb" secondAttribute="height" id="xAx-Ft-WFB"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="audioSwitch" destination="cc0-io-gZ5" id="Ek6-k3-i5W"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="abD-wh-zXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
