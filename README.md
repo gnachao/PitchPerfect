@@ -3,7 +3,7 @@
 
 **Features:**
 - Record voice. Allow to pause or resume. 
-- Play recorded voice with six effects: slow, fast, hight pitch, low pitch, echo, and reverb
+- Play recorded voice with six sound effects: slow, fast, hight pitch, low pitch, echo, and reverb
 - play sample audio clip with six effects
 
 **Design:**
